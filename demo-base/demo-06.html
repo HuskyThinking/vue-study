@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h3>{{ web.show }}</h3>
+    <p v-show="web.show">邓瑞编程</p>
+    <p v-if="web.show">dengruicode.com</p>
+
+    <button @click="toggle">点击切换显示状态</button>
+
+    <p v-if="web.user < 1000">新网站</p>
+    <p v-else-if="web.user >= 1000 && web.user < 10000">优秀网站</p>
+    <p v-else-if="web.user >= 10000 && web.user < 100000">资深网站</p>
+    <p v-else>超级网站</p>
+  </div>
+  <script type="module">
+    /*
+        v-show 通过 css display属性 来控制元素的显示或隐藏
+        v-if 用于对元素进行条件渲染. 当条件为 true 时, 渲染该元素, 为 false 时, 则不渲染
+
+        v-show 适用于频繁切换元素的显示状态, 因为只改变 display 属性, 不需要重新渲染整个组件
+        v-if 适用于较少改变的场景, 因为频繁从 dom 中删除或添加元素, 会导致性能下降
+    */
+    import { createApp, reactive } from './vue.esm-browser.js'
+
+    createApp({
+      setup () {
+        const web = reactive({
+          show: true,
+          user: 500
+        })
+
+        const toggle = () => {
+          web.show = !web.show
+        }
+
+        return {
+          web,
+          toggle
+        }
+      }
+    }).mount("#app")
+  </script>
+</body>
+
+</html>
